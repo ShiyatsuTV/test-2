@@ -1,0 +1,25 @@
+name: Build consumer
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Installer JDK 21 + injecter les identifiants Nexus
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          server-id: nexus-shiyatsu
+          server-username: NEXUS_USERNAME_ENV
+          server-password: NEXUS_PASSWORD_ENV
+
+      - name: Build
+        run: mvn --batch-mode -s .github/settings.xml clean compile
+        env:
+          NEXUS_USERNAME_ENV: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD_ENV: ${{ secrets.NEXUS_PASSWORD }}
