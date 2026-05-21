@@ -19,7 +19,7 @@ jobs:
           server-password: NEXUS_PASSWORD_ENV
 
       - name: Build
-        run: mvn --batch-mode -s .github/settings.xml clean compile
+        run: mvn --batch-mode clean compile
         env:
           NEXUS_USERNAME_ENV: ${{ secrets.NEXUS_USERNAME }}
           NEXUS_PASSWORD_ENV: ${{ secrets.NEXUS_PASSWORD }}
